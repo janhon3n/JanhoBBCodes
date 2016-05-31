@@ -170,7 +170,6 @@ class JanhoBB {
 	@return string Returns the modified string
 	*/
 	public function insertBB($str){
-		print_r($this->bbRules);
 	        foreach($this->bbRules as $row){
 	                $bb_start = $this->bbOpen1 . $row->bbTag . $this->bbOpen2;
 	                $bb_end = $this->bbClose1 . $row->bbTag . $this->bbClose2;
@@ -239,11 +238,11 @@ class JanhoBB {
 	@return string Returns the modified string
 	*/
 	public function insertReplace($str){
-		if(count($replaceRules) > 0){
-		        foreach($replaceRules as $row3){
-				$needle = $bbOpen1 . $row3->needle . $bbOpen2;
+		if(count($this->replaceRules) > 0){
+		        foreach($this->replaceRules as $row3){
+				$needle = $this->bbOpen1 . $row3->needle . $this->bbOpen2;
 				$replace = '<' . $row3->replace . '/>';
-		                $text = str_replace($needle, $replace, $str);
+		                $str = str_replace($needle, $replace, $str);
 		        }
 		}
 	        return $str;
@@ -260,20 +259,4 @@ class JanhoBB {
 		return $newstr;
 	}
 }
-
-
-$janhobb = new JanhoBB();
-$newrule = new JanhoBBRule('b','b');
-$janhobb->initBBRule($newrule);
-
-$newrule = new JanhoBBRule('br','br');
-$janhobb->initBBRule($newrule);
-
-$newrule = new JanhoBBRule('url','a');
-$newrule->initAttribute('href', 1, 0);
-$janhobb->initBBRule($newrule);
-
-echo $janhobb->modifyString($argv[1]);
-echo '
-';
 
